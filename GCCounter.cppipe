@@ -1,0 +1,1436 @@
+CellProfiler Pipeline: http://www.cellprofiler.org
+Version:3
+DateRevision:20160418141927
+GitHash:9969f42
+ModuleCount:79
+HasImagePlaneDetails:False
+
+Images:[module_num:1|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'To begin creating your project, use the Images module to compile a list of files and/or folders that you want to analyze. You can also specify a set of rules to include only the desired files in your selected folders.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    :
+    Filter images?:No filtering
+    Select the rule criteria:or (file does contain "661")
+
+Metadata:[module_num:2|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'The Metadata module optionally allows you to extract information describing your images (i.e, metadata) which will be stored along with your measurements. This information can be contained in the file name and/or location, or in an external file.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Extract metadata?:No
+    Metadata data type:Text
+    Metadata types:{}
+    Extraction method count:1
+    Metadata extraction method:Extract from file/folder names
+    Metadata source:File name
+    Regular expression:^(?P<Animal>\x5B0-9\x5D\x5B0-9\x5D)_(?P<Marker>.*)_(?P<Time_point>.*).tif
+    Regular expression:(?P<Time_Point>.*)$
+    Extract metadata from:Images matching a rule
+    Select the filtering criteria:and (extension does istif)
+    Metadata file location:
+    Match file and image metadata:\x5B\x5D
+    Use case insensitive matching?:No
+
+NamesAndTypes:[module_num:3|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\'The NamesAndTypes module allows you to assign a meaningful name to each image by which other modules will refer to it.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Assign a name to:All images
+    Select the image type:Color image
+    Name to assign these images:RAW
+    Match metadata:\x5B\x5D
+    Image set matching method:Order
+    Set intensity range from:Image metadata
+    Assignments count:1
+    Single images count:0
+    Maximum intensity:255.0
+    Select the rule criteria:and (file does contain "CD3")
+    Name to assign these images:Raw_CD3
+    Name to assign these objects:Cell
+    Select the image type:Grayscale image
+    Set intensity range from:Image metadata
+    Retain outlines of loaded objects?:No
+    Name the outline image:LoadedOutlines
+    Maximum intensity:255.0
+
+Groups:[module_num:4|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'The Groups module optionally allows you to split your list of images into image subsets (groups) which will be processed independently of each other. Examples of groupings include screening batches, microtiter plates, time-lapse movies, etc.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Do you want to group your images?:No
+    grouping metadata count:1
+    Metadata category:Time_point
+
+Resize:[module_num:5|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'Resize images to use less memory and make the analysis run faster.\', \'70% of originial size.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RAW
+    Name the output image:ResizedRAW
+    Resizing method:Resize by a fraction or multiple of the original size
+    Resizing factor:0.7
+    Width of the final image:100
+    Height of the final image:100
+    Interpolation method:Bicubic
+    Method to specify the dimensions:Manual
+    Select the image with the desired dimensions:None
+    Additional image count:0
+
+ColorToGray:[module_num:6|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizedRAW
+    Conversion method:Split
+    Image type:RGB
+    Name the output image:OrigGray
+    Relative weight of the red channel:1.0
+    Relative weight of the green channel:1.0
+    Relative weight of the blue channel:1.0
+    Convert red to gray?:Yes
+    Name the output image:ResizedKi67
+    Convert green to gray?:Yes
+    Name the output image:ResizedPD1
+    Convert blue to gray?:Yes
+    Name the output image:ResizedCD3
+    Convert hue to gray?:Yes
+    Name the output image:OrigHue
+    Convert saturation to gray?:Yes
+    Name the output image:OrigSaturation
+    Convert value to gray?:Yes
+    Name the output image:OrigValue
+    Channel count:1
+    Channel number:Red\x3A 1
+    Relative weight of the channel:1.0
+    Image name:Channel1
+
+CorrectIlluminationCalculate:[module_num:7|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'Calculates background staining to be removed in CD3 channel.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizedCD3
+    Name the output image:IllumCD3_calc
+    Select how the illumination function is calculated:Background
+    Dilate objects in the final averaged image?:No
+    Dilation radius:1
+    Block size:10
+    Rescale the illumination function?:No
+    Calculate function for each image individually, or based on all images?:Each
+    Smoothing method:Fit Polynomial
+    Method to calculate smoothing filter size:Automatic
+    Approximate object size:10
+    Smoothing filter size:10
+    Retain the averaged image?:No
+    Name the averaged image:IllumBlueAvg
+    Retain the dilated image?:No
+    Name the dilated image:IllumBlueDilated
+    Automatically calculate spline parameters?:Yes
+    Background mode:auto
+    Number of spline points:5
+    Background threshold:2.0
+    Image resampling factor:2.0
+    Maximum number of iterations:40
+    Residual value for convergence:0.001
+
+CorrectIlluminationCalculate:[module_num:8|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'Calculates background staining to be removed in Ki67 channel.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizedKi67
+    Name the output image:IllumKi67_calc
+    Select how the illumination function is calculated:Background
+    Dilate objects in the final averaged image?:No
+    Dilation radius:1
+    Block size:10
+    Rescale the illumination function?:No
+    Calculate function for each image individually, or based on all images?:Each
+    Smoothing method:Fit Polynomial
+    Method to calculate smoothing filter size:Automatic
+    Approximate object size:10
+    Smoothing filter size:10
+    Retain the averaged image?:No
+    Name the averaged image:IllumBlueAvg
+    Retain the dilated image?:No
+    Name the dilated image:IllumBlueDilated
+    Automatically calculate spline parameters?:Yes
+    Background mode:auto
+    Number of spline points:5
+    Background threshold:2.0
+    Image resampling factor:2.0
+    Maximum number of iterations:40
+    Residual value for convergence:0.001
+
+CorrectIlluminationCalculate:[module_num:9|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'Calculates background staining to be removed in PD1 channel.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizedPD1
+    Name the output image:IllumPD1_calc
+    Select how the illumination function is calculated:Background
+    Dilate objects in the final averaged image?:No
+    Dilation radius:1
+    Block size:10
+    Rescale the illumination function?:No
+    Calculate function for each image individually, or based on all images?:Each
+    Smoothing method:Fit Polynomial
+    Method to calculate smoothing filter size:Automatic
+    Approximate object size:10
+    Smoothing filter size:10
+    Retain the averaged image?:No
+    Name the averaged image:IllumBlueAvg
+    Retain the dilated image?:No
+    Name the dilated image:IllumBlueDilated
+    Automatically calculate spline parameters?:Yes
+    Background mode:auto
+    Number of spline points:5
+    Background threshold:2.0
+    Image resampling factor:2.0
+    Maximum number of iterations:40
+    Residual value for convergence:0.001
+
+CorrectIlluminationApply:[module_num:10|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'Corrects all channels with calculations of background staining by subtraction.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizedCD3
+    Name the output image:IllumCD3_corr
+    Select the illumination function:IllumCD3_calc
+    Select how the illumination function is applied:Subtract
+    Select the input image:ResizedKi67
+    Name the output image:IllumKi67_corr
+    Select the illumination function:IllumKi67_calc
+    Select how the illumination function is applied:Subtract
+    Select the input image:ResizedPD1
+    Name the output image:IllumPD1_corr
+    Select the illumination function:IllumPD1_calc
+    Select how the illumination function is applied:Subtract
+
+ApplyThreshold:[module_num:11|svn_version:\'Unknown\'|variable_revision_number:7|show_window:False|notes:\x5B\'Threshold Ki67 to individual + cells.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IllumKi67_corr
+    Name the output image:ThreshKi67
+    Select the output image type:Grayscale
+    Set pixels below or above the threshold to zero?:Below threshold
+    Subtract the threshold value from the remaining pixel intensities?:Yes
+    Number of pixels by which to expand the thresholding around those excluded bright pixels:0.0
+    Threshold setting version:1
+    Threshold strategy:Manual
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:No smoothing
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+ApplyThreshold:[module_num:12|svn_version:\'Unknown\'|variable_revision_number:7|show_window:False|notes:\x5B\'Threshold PD1 to individual + cells.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IllumPD1_corr
+    Name the output image:ThreshPD1
+    Select the output image type:Grayscale
+    Set pixels below or above the threshold to zero?:Below threshold
+    Subtract the threshold value from the remaining pixel intensities?:Yes
+    Number of pixels by which to expand the thresholding around those excluded bright pixels:0.0
+    Threshold setting version:1
+    Threshold strategy:Automatic
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:No smoothing
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.5
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+ApplyThreshold:[module_num:13|svn_version:\'Unknown\'|variable_revision_number:7|show_window:False|notes:\x5B\'Threshold CD3 to individual + cells.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IllumCD3_corr
+    Name the output image:ThreshCD3
+    Select the output image type:Grayscale
+    Set pixels below or above the threshold to zero?:Below threshold
+    Subtract the threshold value from the remaining pixel intensities?:Yes
+    Number of pixels by which to expand the thresholding around those excluded bright pixels:0.0
+    Threshold setting version:1
+    Threshold strategy:Manual
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:No smoothing
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+ConserveMemory:[module_num:14|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'Remove images that are not necessary for rest of the analysis so as to conserve memory.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Specify which images?:Images to keep
+    Select image to keep:ThreshCD3
+    Select image to keep:ThreshKi67
+    Select image to keep:ThreshPD1
+
+ImageMath:[module_num:15|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:Subtract
+    Raise the power of the result by:1.0
+    Multiply the result by:2.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:ThreshKi67_noCD3
+    Image or measurement?:Image
+    Select the first image:ThreshKi67
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:ThreshCD3
+    Multiply the second image by:1.0
+    Measurement:
+
+GrayToColor:[module_num:16|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'Creates RGB composite image of  channels after threshold.\', \'Red = Ki67\', \'Green = PD1\', \'Blue = CD3\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select a color scheme:RGB
+    Select the image to be colored red:ThreshKi67_noCD3
+    Select the image to be colored green:ThreshPD1
+    Select the image to be colored blue:ThreshCD3
+    Name the output image:ColorTissue_nocap
+    Relative weight for the red image:1.0
+    Relative weight for the green image:1.0
+    Relative weight for the blue image:1.0
+    Select the image to be colored cyan:Leave this black
+    Select the image to be colored magenta:Leave this black
+    Select the image to be colored yellow:Leave this black
+    Select the image that determines brightness:Leave this black
+    Relative weight for the cyan image:1.0
+    Relative weight for the magenta image:1.0
+    Relative weight for the yellow image:1.0
+    Relative weight for the brightness image:1.0
+    Hidden:1
+    Image name:None
+    Color:#ff0000
+    Weight:1.0
+
+IdentifyObjectsManually:[module_num:17|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ColorTissue_nocap
+    Name the objects to be identified:GCs
+    Retain outlines of the identified objects?:Yes
+    Name the outlines:GCOutlines
+
+IdentifyObjectsManually:[module_num:18|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ColorTissue_nocap
+    Name the objects to be identified:LN
+    Retain outlines of the identified objects?:Yes
+    Name the outlines:LNOutlines
+
+MaskImage:[module_num:19|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'Mask PD1high regions with GC regions that were autoID\\xe2\\x80\\x99d.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ThreshPD1
+    Name the output image:MaskPD1wGCs
+    Use objects or an image as a mask?:Objects
+    Select object for mask:GCs
+    Select image for mask:None
+    Invert the mask?:No
+
+MaskImage:[module_num:20|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ThreshPD1
+    Name the output image:MaskPD1wLN
+    Use objects or an image as a mask?:Objects
+    Select object for mask:LN
+    Select image for mask:None
+    Invert the mask?:No
+
+MaskImage:[module_num:21|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'Mask Ki67high regions with GC regions that were autoID\\xe2\\x80\\x99d.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ThreshKi67
+    Name the output image:MaskKi67wGCs
+    Use objects or an image as a mask?:Objects
+    Select object for mask:GCs
+    Select image for mask:None
+    Invert the mask?:No
+
+MaskImage:[module_num:22|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ThreshKi67
+    Name the output image:MaskKi67wLN
+    Use objects or an image as a mask?:Objects
+    Select object for mask:LN
+    Select image for mask:None
+    Invert the mask?:No
+
+MaskImage:[module_num:23|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ThreshCD3
+    Name the output image:MaskCD3wGCs
+    Use objects or an image as a mask?:Objects
+    Select object for mask:GCs
+    Select image for mask:None
+    Invert the mask?:No
+
+MaskImage:[module_num:24|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ThreshCD3
+    Name the output image:MaskCD3wLN
+    Use objects or an image as a mask?:Objects
+    Select object for mask:LN
+    Select image for mask:None
+    Invert the mask?:No
+
+ConserveMemory:[module_num:25|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'Remove images that are not necessary for rest of the analysis so as to conserve memory.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Specify which images?:Images to keep
+    Select image to keep:MaskKi67wGCs
+    Select image to keep:MaskPD1wGCs
+    Select image to keep:GCOutlines
+    Select image to keep:MaskCD3wGCs
+    Select image to keep:ThreshKi67
+    Select image to keep:ThreshPD1
+    Select image to keep:ThreshCD3
+    Select image to keep:ThreshKi67_noCD3
+    Select image to keep:MaskCD3wLN
+    Select image to keep:MaskKi67wLN
+    Select image to keep:MaskPD1wLN
+    Select image to keep:LNOutlines
+
+ImageMath:[module_num:26|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:Subtract
+    Raise the power of the result by:1.0
+    Multiply the result by:2.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:MaskKi67wGCs_noCD3_x2
+    Image or measurement?:Image
+    Select the first image:MaskKi67wGCs
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:MaskCD3wGCs
+    Multiply the second image by:1.0
+    Measurement:
+
+ImageMath:[module_num:27|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:None
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:MaskPD1wGCs_x2
+    Image or measurement?:Image
+    Select the first image:MaskPD1wGCs
+    Multiply the first image by:2.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:
+    Multiply the second image by:1.0
+    Measurement:
+
+ImageMath:[module_num:28|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:None
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:MaskPD1wLN_x2
+    Image or measurement?:Image
+    Select the first image:MaskPD1wLN
+    Multiply the first image by:2.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:
+    Multiply the second image by:1.0
+    Measurement:
+
+ImageMath:[module_num:29|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:None
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:MaskKi67wLN_x2
+    Image or measurement?:Image
+    Select the first image:MaskKi67wLN
+    Multiply the first image by:2.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:
+    Multiply the second image by:1.0
+    Measurement:
+
+Smooth:[module_num:30|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MaskKi67wGCs_noCD3_x2
+    Name the output image:BlurKi67wGCs
+    Select smoothing method:Circular Average Filter
+    Calculate artifact diameter automatically?:No
+    Typical artifact diameter:2.0
+    Edge intensity difference:0.1
+    Clip intensities to 0 and 1?:Yes
+
+Smooth:[module_num:31|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MaskKi67wLN_x2
+    Name the output image:BlurKi67wLN
+    Select smoothing method:Circular Average Filter
+    Calculate artifact diameter automatically?:No
+    Typical artifact diameter:2.0
+    Edge intensity difference:0.1
+    Clip intensities to 0 and 1?:Yes
+
+Smooth:[module_num:32|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MaskPD1wGCs_x2
+    Name the output image:BlurPD1wGCs
+    Select smoothing method:Circular Average Filter
+    Calculate artifact diameter automatically?:No
+    Typical artifact diameter:2.0
+    Edge intensity difference:0.1
+    Clip intensities to 0 and 1?:Yes
+
+Smooth:[module_num:33|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MaskPD1wLN_x2
+    Name the output image:BlurPD1wLN
+    Select smoothing method:Circular Average Filter
+    Calculate artifact diameter automatically?:No
+    Typical artifact diameter:2.0
+    Edge intensity difference:0.1
+    Clip intensities to 0 and 1?:Yes
+
+Smooth:[module_num:34|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:True]
+    Select the input image:MaskCD3wGCs
+    Name the output image:BlurCD3wGCs
+    Select smoothing method:Circular Average Filter
+    Calculate artifact diameter automatically?:No
+    Typical artifact diameter:2.0
+    Edge intensity difference:0.1
+    Clip intensities to 0 and 1?:Yes
+
+Smooth:[module_num:35|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MaskCD3wLN
+    Name the output image:BlurCD3wLN
+    Select smoothing method:Circular Average Filter
+    Calculate artifact diameter automatically?:No
+    Typical artifact diameter:2.0
+    Edge intensity difference:0.1
+    Clip intensities to 0 and 1?:Yes
+
+IdentifyPrimaryObjects:[module_num:36|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:BlurKi67wGCs
+    Name the primary objects to be identified:Ki67cells
+    Typical diameter of objects, in pixel units (Min,Max):1,8
+    Discard objects outside the diameter range?:No
+    Try to merge too small objects with nearby larger objects?:No
+    Discard objects touching the border of the image?:No
+    Method to distinguish clumped objects:Intensity
+    Method to draw dividing lines between clumped objects:Intensity
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:7.0
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:Ki67Outlines
+    Fill holes in identified objects?:After both thresholding and declumping
+    Automatically calculate size of smoothing filter for declumping?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Retain outlines of the identified objects?:Yes
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:0.5
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5.0
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Threshold setting version:1
+    Threshold strategy:Manual
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:Automatic
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.03
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+IdentifyPrimaryObjects:[module_num:37|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:BlurKi67wLN
+    Name the primary objects to be identified:Ki67cellsTotal
+    Typical diameter of objects, in pixel units (Min,Max):1,8
+    Discard objects outside the diameter range?:No
+    Try to merge too small objects with nearby larger objects?:No
+    Discard objects touching the border of the image?:No
+    Method to distinguish clumped objects:Intensity
+    Method to draw dividing lines between clumped objects:Intensity
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:7.0
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:Ki67OutlinesTotal
+    Fill holes in identified objects?:After both thresholding and declumping
+    Automatically calculate size of smoothing filter for declumping?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Retain outlines of the identified objects?:Yes
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:0.5
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5.0
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Threshold setting version:1
+    Threshold strategy:Manual
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:Automatic
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.03
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+IdentifyPrimaryObjects:[module_num:38|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:BlurPD1wGCs
+    Name the primary objects to be identified:PD1cells
+    Typical diameter of objects, in pixel units (Min,Max):3,20
+    Discard objects outside the diameter range?:Yes
+    Try to merge too small objects with nearby larger objects?:No
+    Discard objects touching the border of the image?:No
+    Method to distinguish clumped objects:Intensity
+    Method to draw dividing lines between clumped objects:Intensity
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:7.0
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:PD1Outlines
+    Fill holes in identified objects?:After both thresholding and declumping
+    Automatically calculate size of smoothing filter for declumping?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Retain outlines of the identified objects?:Yes
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:0.5
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5.0
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Threshold setting version:1
+    Threshold strategy:Manual
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:Automatic
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.12
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+IdentifyPrimaryObjects:[module_num:39|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:BlurPD1wLN
+    Name the primary objects to be identified:PD1cellsTotal
+    Typical diameter of objects, in pixel units (Min,Max):3,20
+    Discard objects outside the diameter range?:Yes
+    Try to merge too small objects with nearby larger objects?:No
+    Discard objects touching the border of the image?:No
+    Method to distinguish clumped objects:Intensity
+    Method to draw dividing lines between clumped objects:Intensity
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:7.0
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:PD1OutlinesTotal
+    Fill holes in identified objects?:After both thresholding and declumping
+    Automatically calculate size of smoothing filter for declumping?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Retain outlines of the identified objects?:Yes
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:0.5
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5.0
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Threshold setting version:1
+    Threshold strategy:Manual
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:Automatic
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.12
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+IdentifyPrimaryObjects:[module_num:40|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:True]
+    Select the input image:BlurCD3wGCs
+    Name the primary objects to be identified:CD3cells
+    Typical diameter of objects, in pixel units (Min,Max):2,20
+    Discard objects outside the diameter range?:Yes
+    Try to merge too small objects with nearby larger objects?:No
+    Discard objects touching the border of the image?:No
+    Method to distinguish clumped objects:Intensity
+    Method to draw dividing lines between clumped objects:Intensity
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:7.0
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:CD3Outlines
+    Fill holes in identified objects?:After both thresholding and declumping
+    Automatically calculate size of smoothing filter for declumping?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Retain outlines of the identified objects?:Yes
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:0.5
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5.0
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Threshold setting version:1
+    Threshold strategy:Manual
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:Automatic
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.05
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+IdentifyPrimaryObjects:[module_num:41|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:BlurCD3wLN
+    Name the primary objects to be identified:CD3cellsTotal
+    Typical diameter of objects, in pixel units (Min,Max):2,20
+    Discard objects outside the diameter range?:Yes
+    Try to merge too small objects with nearby larger objects?:No
+    Discard objects touching the border of the image?:No
+    Method to distinguish clumped objects:Intensity
+    Method to draw dividing lines between clumped objects:Intensity
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:7.0
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:CD3OutlinesTotal
+    Fill holes in identified objects?:After both thresholding and declumping
+    Automatically calculate size of smoothing filter for declumping?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Retain outlines of the identified objects?:Yes
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:0.5
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5.0
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Threshold setting version:1
+    Threshold strategy:Manual
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:Automatic
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.05
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+    Use default parameters?:Default
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+
+RelateObjects:[module_num:42|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'Couple Ki67+ cell count to GC of origin.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input child objects:Ki67cells
+    Select the input parent objects:GCs
+    Calculate child-parent distances?:None
+    Calculate per-parent means for all child measurements?:No
+    Calculate distances to other parents?:No
+    Parent name:None
+
+RelateObjects:[module_num:43|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input child objects:Ki67cellsTotal
+    Select the input parent objects:LN
+    Calculate child-parent distances?:None
+    Calculate per-parent means for all child measurements?:No
+    Calculate distances to other parents?:No
+    Parent name:None
+
+RelateObjects:[module_num:44|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'Couple PD1+ cell count to GC of origin.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input child objects:PD1cells
+    Select the input parent objects:GCs
+    Calculate child-parent distances?:None
+    Calculate per-parent means for all child measurements?:No
+    Calculate distances to other parents?:No
+    Parent name:None
+
+RelateObjects:[module_num:45|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input child objects:PD1cellsTotal
+    Select the input parent objects:LN
+    Calculate child-parent distances?:None
+    Calculate per-parent means for all child measurements?:No
+    Calculate distances to other parents?:No
+    Parent name:None
+
+RelateObjects:[module_num:46|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input child objects:CD3cells
+    Select the input parent objects:GCs
+    Calculate child-parent distances?:None
+    Calculate per-parent means for all child measurements?:No
+    Calculate distances to other parents?:No
+    Parent name:None
+
+RelateObjects:[module_num:47|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input child objects:CD3cellsTotal
+    Select the input parent objects:LN
+    Calculate child-parent distances?:None
+    Calculate per-parent means for all child measurements?:No
+    Calculate distances to other parents?:No
+    Parent name:None
+
+MeasureImageAreaOccupied:[module_num:48|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'Measure area of GCs.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:2
+    Measure the area occupied in a binary image, or in objects?:Objects
+    Select objects to measure:GCs
+    Retain a binary image of the object regions?:No
+    Name the output binary image:Stain
+    Select a binary image to measure:None
+    Measure the area occupied in a binary image, or in objects?:Objects
+    Select objects to measure:LN
+    Retain a binary image of the object regions?:No
+    Name the output binary image:Stain
+    Select a binary image to measure:None
+
+MeasureObjectSizeShape:[module_num:49|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select objects to measure:GCs
+    Calculate the Zernike features?:No
+
+MeasureImageIntensity:[module_num:50|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the image to measure:MaskCD3wGCs
+    Measure the intensity only from areas enclosed by objects?:Yes
+    Select the input objects:GCs
+    Select the image to measure:MaskKi67wGCs
+    Measure the intensity only from areas enclosed by objects?:Yes
+    Select the input objects:GCs
+    Select the image to measure:MaskPD1wGCs
+    Measure the intensity only from areas enclosed by objects?:Yes
+    Select the input objects:GCs
+
+MeasureObjectIntensity:[module_num:51|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:3
+    Select an image to measure:MaskCD3wGCs
+    Select an image to measure:MaskKi67wGCs
+    Select an image to measure:MaskPD1wGCs
+    Select objects to measure:GCs
+
+CalculateMath:[module_num:52|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'Reverse resize and convert pixels to microns\', \'1/0.7 * 0.8016 = 1.145\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Name the output measurement:GC_Area_Microns
+    Operation:None
+    Select the numerator measurement type:Object
+    Select the numerator objects:GCs
+    Select the numerator measurement:AreaShape_Area
+    Multiply the above operand by:1.145
+    Raise the power of above operand by:1.0
+    Select the second operand measurement type:Image
+    Select the second operand objects:None
+    Select the second operand measurement:None
+    Multiply the above operand by:1.0
+    Raise the power of above operand by:1.0
+    Take log10 of result?:No
+    Multiply the result by:1.0
+    Raise the power of result by:1.0
+    Add to the result:0.0
+    Constrain the result to a lower bound?:No
+    Enter the lower bound:0.0
+    Constrain the result to an upper bound?:No
+    Enter the upper bound:1.0
+
+CalculateMath:[module_num:53|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Name the output measurement:Total_GC_Area
+    Operation:None
+    Select the numerator measurement type:Image
+    Select the numerator objects:GCs
+    Select the numerator measurement:AreaOccupied_AreaOccupied_GCs
+    Multiply the above operand by:1.145
+    Raise the power of above operand by:1.0
+    Select the second operand measurement type:Image
+    Select the second operand objects:None
+    Select the second operand measurement:None
+    Multiply the above operand by:1.0
+    Raise the power of above operand by:1.0
+    Take log10 of result?:No
+    Multiply the result by:1.0
+    Raise the power of result by:1.0
+    Add to the result:0.0
+    Constrain the result to a lower bound?:No
+    Enter the lower bound:0.0
+    Constrain the result to an upper bound?:No
+    Enter the upper bound:1.0
+
+CalculateMath:[module_num:54|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Name the output measurement:LN_Area_Micron
+    Operation:None
+    Select the numerator measurement type:Image
+    Select the numerator objects:GCs
+    Select the numerator measurement:AreaOccupied_AreaOccupied_LN
+    Multiply the above operand by:1.145
+    Raise the power of above operand by:1.0
+    Select the second operand measurement type:Image
+    Select the second operand objects:None
+    Select the second operand measurement:None
+    Multiply the above operand by:1.0
+    Raise the power of above operand by:1.0
+    Take log10 of result?:No
+    Multiply the result by:1.0
+    Raise the power of result by:1.0
+    Add to the result:0.0
+    Constrain the result to a lower bound?:No
+    Enter the lower bound:0.0
+    Constrain the result to an upper bound?:No
+    Enter the upper bound:1.0
+
+GrayToColor:[module_num:55|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select a color scheme:RGB
+    Select the image to be colored red:ThreshKi67
+    Select the image to be colored green:ThreshPD1
+    Select the image to be colored blue:ThreshCD3
+    Name the output image:ColorImage_Tissue
+    Relative weight for the red image:1.0
+    Relative weight for the green image:1.0
+    Relative weight for the blue image:1.0
+    Select the image to be colored cyan:Leave this black
+    Select the image to be colored magenta:Leave this black
+    Select the image to be colored yellow:Leave this black
+    Select the image that determines brightness:Leave this black
+    Relative weight for the cyan image:1.0
+    Relative weight for the magenta image:1.0
+    Relative weight for the yellow image:1.0
+    Relative weight for the brightness image:1.0
+    Hidden:1
+    Image name:None
+    Color:#ff0000
+    Weight:1.0
+
+OverlayOutlines:[module_num:56|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'Add outlines of GCs autoID\\xe2\\x80\\x99d to RGB composite image. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display outlines on a blank image?:No
+    Select image on which to display outlines:ColorImage_Tissue
+    Name the output image:ColorImage_TissueOverlayGCs
+    Outline display mode:Color
+    Select method to determine brightness of outlines:Max of image
+    Width of outlines:1
+    Select outlines to display:GCOutlines
+    Select outline color:#FF00F3
+    Load outlines from an image or objects?:Image
+    Select objects to display:GCs
+
+OverlayOutlines:[module_num:57|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display outlines on a blank image?:No
+    Select image on which to display outlines:ThreshKi67_noCD3
+    Name the output image:GC_Ki67count_image
+    Outline display mode:Color
+    Select method to determine brightness of outlines:Max of image
+    Width of outlines:1
+    Select outlines to display:Ki67Outlines
+    Select outline color:#FF0013
+    Load outlines from an image or objects?:Image
+    Select objects to display:Ki67cells
+    Select outlines to display:GCOutlines
+    Select outline color:#FF00E8
+    Load outlines from an image or objects?:Image
+    Select objects to display:Ki67cells
+
+OverlayOutlines:[module_num:58|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display outlines on a blank image?:No
+    Select image on which to display outlines:ThreshKi67
+    Name the output image:LN_Ki67count_image
+    Outline display mode:Color
+    Select method to determine brightness of outlines:Max of image
+    Width of outlines:1
+    Select outlines to display:Ki67OutlinesTotal
+    Select outline color:#FF0013
+    Load outlines from an image or objects?:Image
+    Select objects to display:Ki67cells
+    Select outlines to display:LNOutlines
+    Select outline color:#FF00E8
+    Load outlines from an image or objects?:Image
+    Select objects to display:Ki67cells
+
+OverlayOutlines:[module_num:59|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display outlines on a blank image?:No
+    Select image on which to display outlines:ThreshPD1
+    Name the output image:GC_PD1count_image
+    Outline display mode:Color
+    Select method to determine brightness of outlines:Max of image
+    Width of outlines:1
+    Select outlines to display:PD1Outlines
+    Select outline color:#00FF0A
+    Load outlines from an image or objects?:Image
+    Select objects to display:PD1cells
+    Select outlines to display:GCOutlines
+    Select outline color:#FC00FF
+    Load outlines from an image or objects?:Image
+    Select objects to display:GCs
+
+OverlayOutlines:[module_num:60|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display outlines on a blank image?:No
+    Select image on which to display outlines:ThreshPD1
+    Name the output image:LN_PD1count_image
+    Outline display mode:Color
+    Select method to determine brightness of outlines:Max of image
+    Width of outlines:1
+    Select outlines to display:PD1OutlinesTotal
+    Select outline color:#00FF0A
+    Load outlines from an image or objects?:Image
+    Select objects to display:PD1cells
+    Select outlines to display:LNOutlines
+    Select outline color:#FC00FF
+    Load outlines from an image or objects?:Image
+    Select objects to display:GCs
+
+OverlayOutlines:[module_num:61|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display outlines on a blank image?:No
+    Select image on which to display outlines:ThreshCD3
+    Name the output image:GC_CD3count_image
+    Outline display mode:Color
+    Select method to determine brightness of outlines:Max of image
+    Width of outlines:1
+    Select outlines to display:CD3Outlines
+    Select outline color:#00FFFA
+    Load outlines from an image or objects?:Image
+    Select objects to display:CD3cells
+    Select outlines to display:GCOutlines
+    Select outline color:#FF00D9
+    Load outlines from an image or objects?:Image
+    Select objects to display:GCs
+
+OverlayOutlines:[module_num:62|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display outlines on a blank image?:No
+    Select image on which to display outlines:ThreshCD3
+    Name the output image:LN_CD3count_image
+    Outline display mode:Color
+    Select method to determine brightness of outlines:Max of image
+    Width of outlines:1
+    Select outlines to display:CD3OutlinesTotal
+    Select outline color:#00FFFA
+    Load outlines from an image or objects?:Image
+    Select objects to display:CD3cells
+    Select outlines to display:LNOutlines
+    Select outline color:#FF00D9
+    Load outlines from an image or objects?:Image
+    Select objects to display:GCs
+
+DisplayDataOnImage:[module_num:63|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\'Add labels of GC number to RGB composite with GC outlines.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display object or image measurements?:Object
+    Select the input objects:GCs
+    Measurement to display:Number_Object_Number
+    Select the image on which to display the measurements:ColorImage_TissueOverlayGCs
+    Text color:#F500FF
+    Name the output image that has the measurements displayed:ColorImage_TissueOverlayGCsNumbered
+    Font size (points):16
+    Number of decimals:0
+    Image elements to save:Image
+    Annotation offset (in pixels):0
+    Display mode:Text
+    Color map:Default
+    Display background image?:Yes
+    Color map scale:Use this image\'s measurement range
+    Color map range:0.0,1.0
+
+DisplayDataOnImage:[module_num:64|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display object or image measurements?:Image
+    Select the input objects:GCs
+    Measurement to display:Count_Ki67cells
+    Select the image on which to display the measurements:GC_Ki67count_image
+    Text color:#FF0007
+    Name the output image that has the measurements displayed:GC_Ki67count_image2
+    Font size (points):16
+    Number of decimals:0
+    Image elements to save:Image
+    Annotation offset (in pixels):0
+    Display mode:Text
+    Color map:Default
+    Display background image?:Yes
+    Color map scale:Use this image\'s measurement range
+    Color map range:0.0,1.0
+
+DisplayDataOnImage:[module_num:65|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display object or image measurements?:Image
+    Select the input objects:GCs
+    Measurement to display:Count_Ki67cellsTotal
+    Select the image on which to display the measurements:LN_Ki67count_image
+    Text color:#FF0007
+    Name the output image that has the measurements displayed:LN_Ki67count_image2
+    Font size (points):16
+    Number of decimals:0
+    Image elements to save:Image
+    Annotation offset (in pixels):0
+    Display mode:Text
+    Color map:Default
+    Display background image?:Yes
+    Color map scale:Use this image\'s measurement range
+    Color map range:0.0,1.0
+
+DisplayDataOnImage:[module_num:66|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display object or image measurements?:Image
+    Select the input objects:GCs
+    Measurement to display:Count_PD1cells
+    Select the image on which to display the measurements:GC_PD1count_image
+    Text color:#00FF02
+    Name the output image that has the measurements displayed:GC_PD1count_image2
+    Font size (points):16
+    Number of decimals:0
+    Image elements to save:Image
+    Annotation offset (in pixels):0
+    Display mode:Text
+    Color map:Default
+    Display background image?:Yes
+    Color map scale:Use this image\'s measurement range
+    Color map range:0.0,1.0
+
+DisplayDataOnImage:[module_num:67|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display object or image measurements?:Image
+    Select the input objects:GCs
+    Measurement to display:Count_PD1cellsTotal
+    Select the image on which to display the measurements:LN_PD1count_image
+    Text color:#00FF02
+    Name the output image that has the measurements displayed:LN_PD1count_image2
+    Font size (points):16
+    Number of decimals:0
+    Image elements to save:Image
+    Annotation offset (in pixels):0
+    Display mode:Text
+    Color map:Default
+    Display background image?:Yes
+    Color map scale:Use this image\'s measurement range
+    Color map range:0.0,1.0
+
+DisplayDataOnImage:[module_num:68|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display object or image measurements?:Image
+    Select the input objects:GCs
+    Measurement to display:Count_CD3cells
+    Select the image on which to display the measurements:GC_CD3count_image
+    Text color:#00E9FF
+    Name the output image that has the measurements displayed:GC_CD3count_image2
+    Font size (points):16
+    Number of decimals:0
+    Image elements to save:Image
+    Annotation offset (in pixels):0
+    Display mode:Text
+    Color map:Default
+    Display background image?:Yes
+    Color map scale:Use this image\'s measurement range
+    Color map range:0.0,1.0
+
+DisplayDataOnImage:[module_num:69|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Display object or image measurements?:Image
+    Select the input objects:GCs
+    Measurement to display:Count_CD3cellsTotal
+    Select the image on which to display the measurements:LN_CD3count_image
+    Text color:#00E9FF
+    Name the output image that has the measurements displayed:LN_CD3count_image2
+    Font size (points):16
+    Number of decimals:0
+    Image elements to save:Image
+    Annotation offset (in pixels):0
+    Display mode:Text
+    Color map:Default
+    Display background image?:Yes
+    Color map scale:Use this image\'s measurement range
+    Color map range:0.0,1.0
+
+SaveImages:[module_num:70|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\'\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:True]
+    Select the type of image to save:Image
+    Select the image to save:ColorImage_Tissue
+    Select the objects to save:None
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:TissueComposite_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:TissueComposite
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CComposites
+    Image bit depth:8-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+SaveImages:[module_num:71|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:ColorImage_TissueOverlayGCsNumbered
+    Select the objects to save:None
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:TissueGCLabels_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:TissueGCLabels
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CGC_Outlines
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+SaveImages:[module_num:72|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:GC_Ki67count_image2
+    Select the objects to save:None
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:GCKi67count_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:GCKi67count
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CKi67_cells
+    Image bit depth:8-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+SaveImages:[module_num:73|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:LN_Ki67count_image2
+    Select the objects to save:None
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:LNKi67count_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:LNKi67count
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CKi67_cells_Total
+    Image bit depth:8-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+SaveImages:[module_num:74|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:GC_PD1count_image2
+    Select the objects to save:None
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:GCPD1count_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:GCPD1count
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CPD1_cells
+    Image bit depth:8-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+SaveImages:[module_num:75|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:LN_PD1count_image2
+    Select the objects to save:None
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:LNPD1count_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:LNPD1count
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CPD1_cells_Total
+    Image bit depth:8-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+SaveImages:[module_num:76|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:GC_CD3count_image2
+    Select the objects to save:None
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:GCCD3count_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:GCCD3count
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CCD3_cells
+    Image bit depth:8-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+SaveImages:[module_num:77|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:LN_CD3count_image2
+    Select the objects to save:None
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:LNCD3count_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:LNCD3count
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CCD3_cells_Total
+    Image bit depth:8-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+SaveImages:[module_num:78|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Objects
+    Select the image to save:GCOutlines
+    Select the objects to save:GCs
+    Select the module display window to save:None
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:RAW
+    Enter single file name:GCs_
+    Number of digits:2
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:GCs
+    Saved file format:tif
+    Output file location:Default Output Folder sub-folder\x7CGC_Outlines/RAW
+    Image bit depth:8-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Rescale the images? :Yes
+    Save as grayscale or color image?:Grayscale
+    Select colormap:gray
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+    Saved movie format:avi
+
+ExportToSpreadsheet:[module_num:79|svn_version:\'Unknown\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:True]
+    Select the column delimiter:Comma (",")
+    Add image metadata columns to your object data file?:Yes
+    Limit output to a size that is allowed in Excel?:No
+    Select the measurements to export:Yes
+    Calculate the per-image mean values for object measurements?:Yes
+    Calculate the per-image median values for object measurements?:Yes
+    Calculate the per-image standard deviation values for object measurements?:No
+    Output file location:Default Output Folder\x7CDesktop/VEFFAS STUDY/CP_Output
+    Create a GenePattern GCT file?:No
+    Select source of sample row name:Metadata
+    Select the image to use as the identifier:None
+    Select the metadata to use as the identifier:None
+    Export all measurement types?:Yes
+    :PD1cells\x7CLocation_Center_Y,PD1cells\x7CLocation_Center_X,PD1cells\x7CParent_GCs,PD1cells\x7CNumber_Object_Number,CD3cells\x7CLocation_Center_Y,CD3cells\x7CLocation_Center_X,CD3cells\x7CParent_GCs,CD3cells\x7CNumber_Object_Number,Ki67cells\x7CLocation_Center_Y,Ki67cells\x7CLocation_Center_X,Ki67cells\x7CParent_GCs,Ki67cells\x7CNumber_Object_Number,LN\x7CLocation_Center_Y,LN\x7CLocation_Center_X,LN\x7CChildren_Ki67cellsTotal_Count,LN\x7CChildren_PD1cellsTotal_Count,LN\x7CChildren_CD3cellsTotal_Count,LN\x7CNumber_Object_Number,Image\x7CCount_PD1cells,Image\x7CCount_PD1cellsTotal,Image\x7CCount_Ki67cells,Image\x7CCount_Ki67cellsTotal,Image\x7CCount_CD3cellsTotal,Image\x7CCount_LN,Image\x7CCount_GCs,Image\x7CCount_CD3cells,Image\x7CAreaOccupied_Perimeter_LN,Image\x7CAreaOccupied_Perimeter_GCs,Image\x7CAreaOccupied_AreaOccupied_LN,Image\x7CAreaOccupied_AreaOccupied_GCs,Image\x7CAreaOccupied_TotalArea_LN,Image\x7CAreaOccupied_TotalArea_GCs,Image\x7CURL_RAW,Image\x7CScaling_RAW,Image\x7CIntensity_MinIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_MinIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_MinIntensity_MaskKi67wGCs_GCs,Image\x7CIntensity_StdIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_StdIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_StdIntensity_MaskKi67wGCs_GCs,Image\x7CIntensity_TotalIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_TotalIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_TotalIntensity_MaskKi67wGCs_GCs,Image\x7CIntensity_TotalArea_MaskPD1wGCs_GCs,Image\x7CIntensity_TotalArea_MaskCD3wGCs_GCs,Image\x7CIntensity_TotalArea_MaskKi67wGCs_GCs,Image\x7CIntensity_UpperQuartileIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_UpperQuartileIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_UpperQuartileIntensity_MaskKi67wGCs_GCs,Image\x7CIntensity_MADIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_MADIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_MADIntensity_MaskKi67wGCs_GCs,Image\x7CIntensity_MeanIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_MeanIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_MeanIntensity_MaskKi67wGCs_GCs,Image\x7CIntensity_MaxIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_MaxIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_MaxIntensity_MaskKi67wGCs_GCs,Image\x7CIntensity_MedianIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_MedianIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_MedianIntensity_MaskKi67wGCs_GCs,Image\x7CIntensity_PercentMaximal_MaskPD1wGCs_GCs,Image\x7CIntensity_PercentMaximal_MaskCD3wGCs_GCs,Image\x7CIntensity_PercentMaximal_MaskKi67wGCs_GCs,Image\x7CIntensity_LowerQuartileIntensity_MaskPD1wGCs_GCs,Image\x7CIntensity_LowerQuartileIntensity_MaskCD3wGCs_GCs,Image\x7CIntensity_LowerQuartileIntensity_MaskKi67wGCs_GCs,Image\x7CPathName_RAW,Image\x7CThreshold_FinalThreshold_PD1cells,Image\x7CThreshold_FinalThreshold_PD1cellsTotal,Image\x7CThreshold_FinalThreshold_Ki67cellsTotal,Image\x7CThreshold_FinalThreshold_ThreshCD3,Image\x7CThreshold_FinalThreshold_CD3cellsTotal,Image\x7CThreshold_FinalThreshold_Ki67cells,Image\x7CThreshold_FinalThreshold_ThreshKi67,Image\x7CThreshold_FinalThreshold_ThreshPD1,Image\x7CThreshold_FinalThreshold_CD3cells,Image\x7CThreshold_SumOfEntropies_PD1cells,Image\x7CThreshold_SumOfEntropies_PD1cellsTotal,Image\x7CThreshold_SumOfEntropies_Ki67cellsTotal,Image\x7CThreshold_SumOfEntropies_ThreshCD3,Image\x7CThreshold_SumOfEntropies_CD3cellsTotal,Image\x7CThreshold_SumOfEntropies_Ki67cells,Image\x7CThreshold_SumOfEntropies_ThreshKi67,Image\x7CThreshold_SumOfEntropies_ThreshPD1,Image\x7CThreshold_SumOfEntropies_CD3cells,Image\x7CThreshold_WeightedVariance_PD1cells,Image\x7CThreshold_WeightedVariance_PD1cellsTotal,Image\x7CThreshold_WeightedVariance_Ki67cellsTotal,Image\x7CThreshold_WeightedVariance_ThreshCD3,Image\x7CThreshold_WeightedVariance_CD3cellsTotal,Image\x7CThreshold_WeightedVariance_Ki67cells,Image\x7CThreshold_WeightedVariance_ThreshKi67,Image\x7CThreshold_WeightedVariance_ThreshPD1,Image\x7CThreshold_WeightedVariance_CD3cells,Image\x7CThreshold_OrigThreshold_PD1cells,Image\x7CThreshold_OrigThreshold_PD1cellsTotal,Image\x7CThreshold_OrigThreshold_Ki67cellsTotal,Image\x7CThreshold_OrigThreshold_ThreshCD3,Image\x7CThreshold_OrigThreshold_CD3cellsTotal,Image\x7CThreshold_OrigThreshold_Ki67cells,Image\x7CThreshold_OrigThreshold_ThreshKi67,Image\x7CThreshold_OrigThreshold_ThreshPD1,Image\x7CThreshold_OrigThreshold_CD3cells,Image\x7CFileName_RAW,Image\x7CMath_LN_Area_Micron,Image\x7CMath_Total_GC_Area,CD3cellsTotal\x7CNumber_Object_Number,CD3cellsTotal\x7CParent_LN,CD3cellsTotal\x7CLocation_Center_Y,CD3cellsTotal\x7CLocation_Center_X,Ki67cellsTotal\x7CNumber_Object_Number,Ki67cellsTotal\x7CParent_LN,Ki67cellsTotal\x7CLocation_Center_Y,Ki67cellsTotal\x7CLocation_Center_X,GCs\x7CNumber_Object_Number,GCs\x7CIntensity_MinIntensity_MaskPD1wGCs,GCs\x7CIntensity_MinIntensity_MaskCD3wGCs,GCs\x7CIntensity_MinIntensity_MaskKi67wGCs,GCs\x7CIntensity_IntegratedIntensityEdge_MaskPD1wGCs,GCs\x7CIntensity_IntegratedIntensityEdge_MaskCD3wGCs,GCs\x7CIntensity_IntegratedIntensityEdge_MaskKi67wGCs,GCs\x7CIntensity_StdIntensity_MaskPD1wGCs,GCs\x7CIntensity_StdIntensity_MaskCD3wGCs,GCs\x7CIntensity_StdIntensity_MaskKi67wGCs,GCs\x7CIntensity_MassDisplacement_MaskPD1wGCs,GCs\x7CIntensity_MassDisplacement_MaskCD3wGCs,GCs\x7CIntensity_MassDisplacement_MaskKi67wGCs,GCs\x7CIntensity_MinIntensityEdge_MaskPD1wGCs,GCs\x7CIntensity_MinIntensityEdge_MaskCD3wGCs,GCs\x7CIntensity_MinIntensityEdge_MaskKi67wGCs,GCs\x7CIntensity_LowerQuartileIntensity_MaskPD1wGCs,GCs\x7CIntensity_LowerQuartileIntensity_MaskCD3wGCs,GCs\x7CIntensity_LowerQuartileIntensity_MaskKi67wGCs,GCs\x7CIntensity_UpperQuartileIntensity_MaskPD1wGCs,GCs\x7CIntensity_UpperQuartileIntensity_MaskCD3wGCs,GCs\x7CIntensity_UpperQuartileIntensity_MaskKi67wGCs,GCs\x7CIntensity_MADIntensity_MaskPD1wGCs,GCs\x7CIntensity_MADIntensity_MaskCD3wGCs,GCs\x7CIntensity_MADIntensity_MaskKi67wGCs,GCs\x7CIntensity_MeanIntensity_MaskPD1wGCs,GCs\x7CIntensity_MeanIntensity_MaskCD3wGCs,GCs\x7CIntensity_MeanIntensity_MaskKi67wGCs,GCs\x7CIntensity_IntegratedIntensity_MaskPD1wGCs,GCs\x7CIntensity_IntegratedIntensity_MaskCD3wGCs,GCs\x7CIntensity_IntegratedIntensity_MaskKi67wGCs,GCs\x7CIntensity_MeanIntensityEdge_MaskPD1wGCs,GCs\x7CIntensity_MeanIntensityEdge_MaskCD3wGCs,GCs\x7CIntensity_MeanIntensityEdge_MaskKi67wGCs,GCs\x7CIntensity_MaxIntensity_MaskPD1wGCs,GCs\x7CIntensity_MaxIntensity_MaskCD3wGCs,GCs\x7CIntensity_MaxIntensity_MaskKi67wGCs,GCs\x7CIntensity_MedianIntensity_MaskPD1wGCs,GCs\x7CIntensity_MedianIntensity_MaskCD3wGCs,GCs\x7CIntensity_MedianIntensity_MaskKi67wGCs,GCs\x7CIntensity_StdIntensityEdge_MaskPD1wGCs,GCs\x7CIntensity_StdIntensityEdge_MaskCD3wGCs,GCs\x7CIntensity_StdIntensityEdge_MaskKi67wGCs,GCs\x7CIntensity_MaxIntensityEdge_MaskPD1wGCs,GCs\x7CIntensity_MaxIntensityEdge_MaskCD3wGCs,GCs\x7CIntensity_MaxIntensityEdge_MaskKi67wGCs,GCs\x7CLocation_Center_Y,GCs\x7CLocation_Center_X,GCs\x7CAreaShape_Area,GCs\x7CChildren_PD1cells_Count,GCs\x7CChildren_CD3cells_Count,GCs\x7CChildren_Ki67cells_Count,GCs\x7CMath_GC_Area_Microns,Experiment\x7CModification_Timestamp,Experiment\x7CPipeline_Pipeline,Experiment\x7CRun_Timestamp,Experiment\x7CCellProfiler_Version,PD1cellsTotal\x7CNumber_Object_Number,PD1cellsTotal\x7CParent_LN,PD1cellsTotal\x7CLocation_Center_Y,PD1cellsTotal\x7CLocation_Center_X
+    Representation of Nan/Inf:NaN
+    Add a prefix to file names?:Yes
+    Filename prefix:Counts_
+    Overwrite existing files without warning?:No
+    Data to export:Image
+    Combine these object measurements with those of the previous object?:No
+    File name:DATA.csv
+    Use the object name for the file name?:Yes
